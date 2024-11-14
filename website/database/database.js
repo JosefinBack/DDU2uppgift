@@ -48,12 +48,14 @@ for (const city of cities) {
 for( let i = 0; i <= cityNames.length; i++) {
 
 let divCities = document.getElementById("cities");
-divCities.classList.add("cityBox"); 
 
 let pElement = document.createElement("p"); 
+pElement.classList.add("cityBox"); //blir en liten grå prick i slutet...hur får jag bort den? 
 pElement.textContent = cityNames[i]; 
 divCities.appendChild(pElement); 
 }
+
+
 const distances = [
   {
     "city1": 1,
