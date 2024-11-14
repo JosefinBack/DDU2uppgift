@@ -1,4 +1,3 @@
-
 const cities = [
   { id: 0, name: "Strasbourg", country: "France", latitude: 48.583, longitude: 7.745, inhabitants: 291313, elevation: 132 },
   { id: 1, name: "Bordeaux", country: "France", latitude: 44.837, longitude: -0.579, inhabitants: 261804, elevation: 6 },
@@ -41,6 +40,20 @@ const cities = [
   { id: 38, name: "Maribor", country: "Slovenia", latitude: 46.554, longitude: 15.646, inhabitants: 112325, elevation: 275 }
 ];
 
+const cityNames = [];
+for (const city of cities) {
+  cityNames.push(city.name) 
+}
+
+for( let i = 0; i <= cityNames.length; i++) {
+
+let divCities = document.getElementById("cities");
+divCities.classList.add("cityBox"); 
+
+let pElement = document.createElement("p"); 
+pElement.textContent = cityNames[i]; 
+divCities.appendChild(pElement); 
+}
 const distances = [
   {
     "city1": 1,
