@@ -40,22 +40,6 @@ const cities = [
   { id: 38, name: "Maribor", country: "Slovenia", latitude: 46.554, longitude: 15.646, inhabitants: 112325, elevation: 275 }
 ];
 
-const cityNames = [];
-for (const city of cities) {
-  cityNames.push(city.name) 
-}
-
-for( let i = 0; i <= cityNames.length; i++) {
-
-let divCities = document.getElementById("cities");
-
-let pElement = document.createElement("p"); 
-pElement.classList.add("cityBox"); //blir en liten grå prick i slutet...hur får jag bort den? 
-pElement.textContent = cityNames[i]; 
-divCities.appendChild(pElement); 
-}
-
-
 const distances = [
   {
     "city1": 1,
@@ -3763,3 +3747,4 @@ const distances = [
     "distance": 200
   }
 ];
+
