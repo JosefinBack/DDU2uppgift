@@ -14,6 +14,7 @@ function namedCity() {
 pElement = document.querySelector("p");
 h2 = document.querySelector("h2");
 title = document.querySelector("title"); 
+table = document.getElementById("table"); 
 
 // Recommended: Ask for the city name and then the rest of the code
 
@@ -47,7 +48,7 @@ namedCity ();
 
 
 
-//let net = document.getElementById("table");
+
 
 //let columns = document.querySelector("grid")
 
