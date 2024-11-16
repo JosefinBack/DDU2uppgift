@@ -13,12 +13,14 @@ function namedCity() {
 
 pElement = document.querySelector("p");
 h2 = document.querySelector("h2");
+title = document.querySelector("title"); 
 
 // Recommended: Ask for the city name and then the rest of the code
 
 let cityFromUser = prompt("Write the name of a city");
 
 h2.textContent = cityFromUser; 
+
 
 const cityNames = [];
 for (const city of cities) {
@@ -33,6 +35,12 @@ for( let i = 0; i < cityNames.length; i++) {
   divCities.appendChild(pElement);  
 }
 
+if (cityNames.includes(cityFromUser)) {
+  title.textContent = cityFromUser;
+}
+else {
+  title.textContent = "Not found";
+}
  
 namedCity (); 
 
