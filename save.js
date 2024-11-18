@@ -6,12 +6,12 @@ function createTable() {
     const emptyHeader = document.createElement("th"); 
     headerRow.appendChild(emptyHeader); 
   
-    for (let i = 0; i < cities.length; i++) {
-      const headerCell = document.createElement("th");
-      headerCell.textContent =i; 
-      headerRow.appendChild(headerCell);
-    }
-    tabell.appendChild(headerRow); 
+    for (let b = 0; b < cityNames.length; b++) {
+        console.log(cityNames.length);
+        const headerCell = document.createElement("div");
+        tabell.appendChild(headerCell);
+        emptyCell.textContent = b; //nummer 0 - 38 (index?)
+      } 
   
   for (let i = 0; i < distances.length; i++) {
     const row = document.createElement("tr");
@@ -64,7 +64,7 @@ function createTable() {
       }
   
     }
-    // headerCell.textContent = i; //nummer 0 - 38 (index?)
+
   
   for (let i = 0; i < distances.length; i++) {
     //console.log(i); //alla nummer 0 - 740

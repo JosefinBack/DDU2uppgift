@@ -15,18 +15,24 @@ function createTable() {
   const tabell = document.createElement("div"); // Grid-layout
   tabell.id = "table"; 
 
-  tabell.style.maxWidth = "1300px";
-
-  // Antal rader och kolumner
+  tabell.style.width = "1200px"; //inte rätt
   const rows = cityNames.length;
-  const columns = 39;
-
-  // Skapa grid-layout
+  const columns = 40;
   tabell.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-  tabell.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-
-  // Lägg till tabellen i den grå behållaren
+  tabell.style.gridTemplateRows = `repeat(${rows + 1}, 1fr)`;
   greyTable.appendChild(tabell);
+
+  for ( let a = 0; a < columns; a++) {
+    const emptyCell = document.createElement("div");
+    emptyCell.classList.add("cell"); 
+    tabell.appendChild(emptyCell); 
+
+    if (a=== 0) {
+      emptyCell.textContent = ""; 
+    } else {
+      emptyCell.textContent = cities[a-1].id;
+    }
+  }
 
   // Iterera över städer och lägg till namn i griden
   for (let i = 0; i < rows; i++) {
@@ -34,6 +40,7 @@ function createTable() {
     let namesRow = document.createElement("div");
     namesRow.textContent = cityNames[i]; // Namnen på städerna
     namesRow.classList.add("head_row");
+    namesRow.classList.add("cell");
     tabell.appendChild(namesRow);
 
     // Skapa celler för resterande kolumner i samma rad
@@ -44,6 +51,7 @@ function createTable() {
       tabell.appendChild(cell); // Lägg till cellen
     }
   }
+  
 }
 
 // Recommended: constants with references to existing HTML-elements
