@@ -9,35 +9,41 @@ function namedCity() {
   });
 }
 
+
 function createTable() {
-  const tabell = document.createElement("table"); 
-  const greyTable = document.getElementById("table");
-  ///tabell.id = "table"; 
- /// tabell.style.gridTemplateRows = "1fr";
-
-  for (let i = 0; i < cities.length; i++) {
-    
-   // headerCell.textContent = i; //nummer 0 - 38 (index?)
-
-  }
   
+  const tabell = document.createElement("div"); // Grid-layout
+  tabell.id = "table"; 
 
-for (let i = 0; i < distances.length; i++) {
-  let namesRow = document.createElement("p");
-  namesRow.textContent = cityNames[i];   // namnen på städerna
+  tabell.style.maxWidth = "1300px";
 
-  tabell.appendChild(namesRow); 
-  
-    for ( let key in distances[i]) { 
+  // Antal rader och kolumner
+  const rows = cityNames.length;
+  const columns = 39;
 
-      ///cell.textContent = distances[i][key];  //siffrona
-      //cell.classList.add("cell"); 
-      //row.appendChild(cell); 
+  // Skapa grid-layout
+  tabell.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+  tabell.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+  // Lägg till tabellen i den grå behållaren
+  greyTable.appendChild(tabell);
+
+  // Iterera över städer och lägg till namn i griden
+  for (let i = 0; i < rows; i++) {
+    // Skapa och lägg till namn på städer i den första kolumnen
+    let namesRow = document.createElement("div");
+    namesRow.textContent = cityNames[i]; // Namnen på städerna
+    namesRow.classList.add("head_row");
+    tabell.appendChild(namesRow);
+
+    // Skapa celler för resterande kolumner i samma rad
+    for (let j = 1; j < columns; j++) {
+      const cell = document.createElement("div");
+      cell.textContent = "Hej"; 
+      cell.classList.add("cell"); 
+      tabell.appendChild(cell); // Lägg till cellen
     }
-    //tabell.appendChild(); 
-  } 
-   
-  greyTable.appendChild(tabell); 
+  }
 }
 
 // Recommended: constants with references to existing HTML-elements
@@ -60,7 +66,7 @@ for (const city of cities) {
 for( let i = 0; i < cityNames.length; i++) { //lenght= hur många gånger loopen ska köras
   let divCities = document.getElementById("cities");
   let pElement = document.createElement("p"); 
-  pElement.classList.add("cityBox"); //blir en liten grå prick i slutet...hur får jag bort den? 
+  pElement.classList.add("cityBox");  
   pElement.textContent = cityNames[i]; 
   divCities.appendChild(pElement);  
 }
