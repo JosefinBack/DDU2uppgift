@@ -11,34 +11,32 @@ function namedCity() {
 
 function createTable() {
   const tabell = document.createElement("table"); 
-  tabell.id = "table";  
-
-  const headerRow = document.createElement("tr"); 
-  const emptyHeader = document.createElement("th"); 
-  headerRow.appendChild(emptyHeader); 
+  const greyTable = document.getElementById("table");
+  ///tabell.id = "table"; 
+ /// tabell.style.gridTemplateRows = "1fr";
 
   for (let i = 0; i < cities.length; i++) {
-    const headerCell = document.createElement("th");
-    headerCell.textContent =i; 
-    headerRow.appendChild(headerCell);
+    
+   // headerCell.textContent = i; //nummer 0 - 38 (index?)
+
   }
-  tabell.appendChild(headerRow); 
+  
 
 for (let i = 0; i < distances.length; i++) {
- const row = document.createElement("tr");
-  const rowHeader = document.createElement("th"); 
-  rowHeader.textContent = cityNames[i];  
-row.appendChild(rowHeader);
+  let namesRow = document.createElement("p");
+  namesRow.textContent = cityNames[i];   // namnen på städerna
+
+  tabell.appendChild(namesRow); 
   
     for ( let key in distances[i]) { 
-      const cell = document.createElement("td");
-      cell.textContent = distances[key]; 
-      cell.classList.add("cell"); 
-      row.appendChild(cell); 
+
+      ///cell.textContent = distances[i][key];  //siffrona
+      //cell.classList.add("cell"); 
+      //row.appendChild(cell); 
     }
-    tabell.appendChild(row); 
+    //tabell.appendChild(); 
   } 
-  const greyTable = document.getElementById("table"); 
+   
   greyTable.appendChild(tabell); 
 }
 
