@@ -15,7 +15,7 @@ function createTable() {
   const tabell = document.createElement("div"); // Grid-layout
   tabell.id = "table"; 
 
-  tabell.style.width = "1260px"; //inte rätt
+  tabell.style.width = "85vw";   //inte rätt
   const rows = cityNames.length;
   const columns = 40;
   tabell.style.gridTemplateColumns = `80 px repeat(${columns}, 1fr)`;
@@ -27,6 +27,7 @@ function createTable() {
     const emptyCell = document.createElement("div");
     emptyCell.classList.add("cell"); 
     emptyCell.classList.add("head_column"); 
+    emptyCell.style.display = "grid";
     tabell.appendChild(emptyCell); 
 
     if (a=== 0) {
@@ -43,6 +44,7 @@ function createTable() {
     namesRow.textContent = `${cities[i].id}` + " - " + cityNames[i]; // Namnen på städerna
     namesRow.classList.add("head_row");
     namesRow.classList.add("cell");
+    namesRow.style.display = "grid"; 
     tabell.appendChild(namesRow);
 
     // Skapa celler för resterande kolumner i samma rad
@@ -50,6 +52,7 @@ function createTable() {
       const cell = document.createElement("div");
       cell.textContent = "Hej"; 
       cell.classList.add("cell"); 
+      cell.style.display = "grid"; 
       tabell.appendChild(cell); 
 
       //fixa innehållet i tabellen. Siffrorna som ska synas är från 3:e egenskapen i objektet
