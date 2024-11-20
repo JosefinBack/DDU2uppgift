@@ -6,16 +6,34 @@ function namedCity() {
     if (pElement.textContent === cityFromUser) {  
       pElement.classList.add("target"); 
     }
-  });
+  }); 
 }
 
+
+/* Hur Felicia fixar så att namnet på landet dyker upp bakom namnet på staden
+function userObject (cityFromUser) {
+  let cityObject = null; //null = false;
+  for (let city of cities) { 
+    if (cityFromUser == cities[city].name){
+      cityObject = cities[city];
+    break;
+    }
+  }
+  if (cityObject === null) {
+    h2.textContent = `${cityFromuser} finns inte i databasen`; 
+  }
+  return cityObject
+}
+
+//console.log(userObject(cityFromUser).name + userObject(cityFromUser).country)
+*/
 
 function createTable() {
   
   const tabell = document.createElement("div"); // Grid-layout
   tabell.id = "table"; 
 
-  tabell.style.width = "85vw";   //inte rätt
+  tabell.style.width = "85vw"; 
   const rows = cityNames.length;
   const columns = 40;
   tabell.style.gridTemplateColumns = `80 px repeat(${columns}, 1fr)`;
@@ -54,16 +72,8 @@ function createTable() {
       cell.classList.add("cell"); 
       cell.style.display = "grid"; 
       tabell.appendChild(cell); 
-
-      //fixa innehållet i tabellen. Siffrorna som ska synas är från 3:e egenskapen i objektet
-      for (let k = 0; k < distances.length; k++) { 
-        const dist = document.createElement("p"); 
-       
-      }
-
     }
   }
-  
 }
 
 // Recommended: constants with references to existing HTML-elements
@@ -76,12 +86,31 @@ greyTable = document.getElementById("table");
 // Recommended: Ask for the city name and then the rest of the code
 
 let cityFromUser = prompt("Write the name of a city");
-h2.textContent = cityFromUser; 
 
 const cityNames = [];
 for (const city of cities) {
   cityNames.push(city.name) 
 }
+
+//h2-innehåll
+//h2.textContent = cityFromUser; 
+const foundCity = cities.find(function(city) {
+  return city.name.toLowerCase() === cityFromUser.toLowerCase();
+ 
+});
+// Kontrollera om staden finns i listan
+if (foundCity) {
+  // Om staden hittas, visa namnet och landet i <h2>
+  h2.textContent = foundCity.name + " (" + foundCity.country + ")";
+} else {
+  // Om staden inte hittas, visa ett meddelande
+  h2.textContent = cityFromUser + " not found in the database";
+}
+
+
+
+//det namnet från cityFromUser ska jag sedan hitta i arrayen och då ta värdet från country
+
 
 for( let i = 0; i < cityNames.length; i++) { //lenght= hur många gånger loopen ska köras
   let divCities = document.getElementById("cities");
@@ -96,10 +125,12 @@ if (cityNames.includes(cityFromUser)) {
 }
 else {
   title.textContent = "Not found";
-}
- 
+} 
+
+
 namedCity ();
 createTable(); 
+//userObject(); 
 
 
 
