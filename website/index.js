@@ -29,18 +29,17 @@ function userObject (cityFromUser) {
 */
 
 function createTable() {
-  
   const tabell = document.createElement("div"); // Grid-layout
   tabell.id = "table"; 
 
   tabell.style.width = "85vw"; 
-  const rows = cityNames.length;
+  const rows = cityNames.length; //???
   const columns = 40;
   tabell.style.gridTemplateColumns = `80 px repeat(${columns}, 1fr)`;
   tabell.style.gridTemplateRows = `repeat(${rows + 1}, 1fr)`;
   greyTable.appendChild(tabell);
 
-  //skapa tomma celler överst, och fyll dem med id-nummer
+  //skapa tomma celler överst, och fyll dem med id-nummer (ÖVERSTA RADEN)
   for ( let a = 0; a < columns; a++) {
     const emptyCell = document.createElement("div");
     emptyCell.classList.add("cell"); 
@@ -54,6 +53,7 @@ function createTable() {
       emptyCell.textContent = cities[a-1].id; ///hoppa över första cellen
     }
   }
+  
 
   // Iterera över städer och lägg till namn i griden
   for (let i = 0; i < rows; i++) {
@@ -92,34 +92,63 @@ for (const city of cities) {
   cityNames.push(city.name) 
 }
 
-//h2-innehåll
-//h2.textContent = cityFromUser; 
+//h2-innehåll görs med en .find på array
 const foundCity = cities.find(function(city) {
-  return city.name.toLowerCase() === cityFromUser.toLowerCase();
- 
+  return city.name === cityFromUser;
 });
-// Kontrollera om staden finns i listan
 if (foundCity) {
-  // Om staden hittas, visa namnet och landet i <h2>
   h2.textContent = foundCity.name + " (" + foundCity.country + ")";
 } else {
-  // Om staden inte hittas, visa ett meddelande
-  h2.textContent = cityFromUser + " not found in the database";
+  h2.textContent = cityFromUser + "not found in the database";
 }
 
-
-
-//det namnet från cityFromUser ska jag sedan hitta i arrayen och då ta värdet från country
-
-
+//Skapar p-element för varje stad och fyller i namnen 
 for( let i = 0; i < cityNames.length; i++) { //lenght= hur många gånger loopen ska köras
   let divCities = document.getElementById("cities");
   let pElement = document.createElement("p"); 
   pElement.classList.add("cityBox");  
-  pElement.textContent = cityNames[i]; 
+  pElement.textContent = cityNames[i]; //namnen på städerna
   divCities.appendChild(pElement);  
 }
 
+
+//närmaste staden ska bli görn och staden 
+let closestCity = null;
+let furthestCity = null;
+let closestDistance = distances.length;
+let furthestDistance = 0; 
+
+for (let path of distances) {
+  if (path.city1 == cityFromUser.id) {
+    if (path.distance < closestDistance) {
+      closestDistance = path.distance;
+      closestCity = path.city1; 
+    }
+    if (path.distance > furthestDistance) {
+      furthestDistance = path.distance; 
+      furthestCity = path.city2; 
+    }
+  }
+}
+
+let closestCityObject = null;
+let furthestCityObject = null;
+for (let city of cities) {
+  if (city.id == closestCity) {
+    closestCityObject = city;
+  }
+  if (city.id == furthestCity) {
+    furthestCityObject = city;
+  }
+}
+
+console.log(closestCity);
+console.log(furthestCity); 
+
+console.log(closestDistance);
+console.log(furthestDistance);
+
+//fixar namnet i title 
 if (cityNames.includes(cityFromUser)) {
   title.textContent = cityFromUser;
 }
@@ -127,24 +156,6 @@ else {
   title.textContent = "Not found";
 } 
 
-
+//anropa funktioner
 namedCity ();
 createTable(); 
-//userObject(); 
-
-
-
-
-
-//när staden finns i arrayen så ska den staden som ligger närmast markeras grön och den som ligger längst bort ska bli blå
-/*
-for (let i = 0; i < city[i]; i++) {
-  for (j = 0; j < city[j]; ++j) {
-
-  }
-}
-
-*/
-
-
-
