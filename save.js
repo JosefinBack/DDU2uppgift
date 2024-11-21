@@ -121,3 +121,35 @@ function createTable() {
     //console.log(furthestDistance);
     }
     */
+
+
+
+/* Felicias kod för att få in siffrorna i tabellen
+
+    for (let j = 0; j < cities.length; j++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.style.display = "grid";
+
+      let distanceValue = null; //värdet av distance
+      for (let distance of distances) {
+          if ((distance.city1 === cities[i].id && distance.city2 === cities[j].id)) {
+              distanceValue = distance.distance;
+              break;
+          }
+          if (distance.city2 === cities[i].id && distance.city1 === cities[j].id) {
+              distanceValue = distance.distance;
+          }
+      }
+
+      if (distanceValue !== null) {
+          cell.textContent = distanceValue / 10;
+      } else if (i === j) {
+          cell.textContent = "";
+      }
+
+      tabell.appendChild(cell);
+  }
+}
+}
+*/
