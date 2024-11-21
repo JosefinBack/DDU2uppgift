@@ -10,34 +10,15 @@ function namedCity() {
 }
 
 
-/* Hur Felicia fixar så att namnet på landet dyker upp bakom namnet på staden
-function userObject (cityFromUser) {
-  let cityObject = null; //null = false;
-  for (let city of cities) { 
-    if (cityFromUser == cities[city].name){
-      cityObject = cities[city];
-    break;
-    }
-  }
-  if (cityObject === null) {
-    h2.textContent = `${cityFromuser} finns inte i databasen`; 
-  }
-  return cityObject
-}
-
-//console.log(userObject(cityFromUser).name + userObject(cityFromUser).country)
-*/
-
 function createTable() {
-  const tabell = document.createElement("div"); // Grid-layout
-  tabell.id = "table"; 
+  const tabell = document.querySelector("#table"); // Grid-layout
 
   tabell.style.width = "85vw"; 
   const rows = cityNames.length; //???
   const columns = 40;
-  tabell.style.gridTemplateColumns = `80 px repeat(${columns}, 1fr)`;
-  tabell.style.gridTemplateRows = `repeat(${rows + 1}, 1fr)`;
-  greyTable.appendChild(tabell);
+  //tabell.style.gridTemplateColumns = `80 px repeat(${columns}, 1fr)`;
+  //tabell.style.gridTemplateRows = `repeat(${rows + 1}, 1fr)`;
+  //greyTable.appendChild(tabell);
 
   //skapa tomma celler överst, och fyll dem med id-nummer (ÖVERSTA RADEN)
   for ( let a = 0; a < columns; a++) {
@@ -53,7 +34,6 @@ function createTable() {
       emptyCell.textContent = cities[a-1].id; ///hoppa över första cellen och fyller i alla celler 
     }
   }
-  
 
   // Iterera över städer och lägg till namn i griden
   for (let i = 0; i < rows; i++) {
@@ -119,12 +99,19 @@ function findClosestAndFurtherst() {
     document.getElementById("closest").textContent = `${nearestCity.name}`; //sätter namnen i h3 med vilken stad som är närmast och längst bort 
     document.getElementById("furthest").textContent = `${farthestCity.name}`; 
    
-    
+    if (cityNames.includes(nearestCity.name)) {
+      const pElements = document.querySelectorAll("#cities p");  
+        pElements.forEach(pElement => {
+      if (pElement.textContent === nearestCity.name) {  
+      pElement.classList.add("closest"); 
+      }
+    }); 
+   }
   }
- 
 }
 
 
+//det p-elementet som matchar nearestCity ska markeras blå samt ha textConent + " ligger `${nearest.distance}` bort"
 
 // Recommended: constants with references to existing HTML-elements
 
