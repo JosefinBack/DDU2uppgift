@@ -82,3 +82,42 @@ function createTable() {
      
     ; 
   }
+
+
+/* Sala och Rebeccas lösning för att få städer att markeras gröna eller blåa
+  if (cityNames) {
+    let closestCity = null;
+    let furthestCity = null;
+    let closestDistance = distances.length;
+    let furthestDistance = 0; 
+    
+    for (let path of distances) {
+      if (path.city1 == cityFromUser.id) {
+        if (path.distance < closestDistance) {
+          closestDistance = path.distance;
+          closestCity = path.city1; 
+        }
+        if (path.distance > furthestDistance) {
+          furthestDistance = path.distance; 
+          furthestCity = path.city2; 
+        }
+      }
+      //console.log(closestCity);
+    //console.log(furthestCity); 
+    
+    }
+    
+    let closestCityObject = null;
+    let furthestCityObject = null;
+    for (let city of cities) {
+      if (city.id == closestCity) {
+        closestCityObject = city;
+      }
+      if (city.id == furthestCity) {
+        furthestCityObject = city;
+      }
+    }
+    //console.log(closestDistance);
+    //console.log(furthestDistance);
+    }
+    */
