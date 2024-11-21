@@ -104,10 +104,20 @@ function findClosestAndFurtherst() {
         pElements.forEach(pElement => {
       if (pElement.textContent === nearestCity.name) {  
       pElement.classList.add("closest"); 
+      pElement.textContent = `${nearestCity.name} ligger ${nearest.distance} mil bort`;
       }
     }); 
    }
+   if (cityNames.includes(farthestCity.name)) {
+    const pElements = document.querySelectorAll("#cities p");  
+      pElements.forEach(pElement => {
+    if (pElement.textContent === farthestCity.name) {  
+    pElement.classList.add("furthest"); 
+    pElement.textContent = `${farthestCity.name} ligger ${farthest.distance} mil bort`;
+    }
+  }); 
   }
+}
 }
 
 
