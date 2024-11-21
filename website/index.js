@@ -43,7 +43,7 @@ function createTable() {
     tabell.appendChild(namesRow);
 
     if ((i + 2) % 2 === 0) {
-      namesRow.classList.add("even_row");
+      namesRow.classList.add("even_row"); //fetsilad underlinje under namnen
      } 
 
     // Skapa celler för resterande kolumner i samma rad och skapar innehåll för cellerna 
@@ -54,12 +54,14 @@ function createTable() {
 
         if ((j + 2) % 2 === 0) {
           cell.classList.add("even_col"); //ger grå bakgrundfärg på varannan kolumn
-          cell.classList.add("even_row"); // celler i jämna kolumner
+          cell.classList.add("even_row"); // fetstil underlinje på celler i jämna kolumner
          } else if 
         ((j + 1) % 2 === 0) {
-          cell.classList.add("even_row");  //celler i ojämna kolumner
+          cell.classList.add("even_row");  //fetstil underlinje på celler i ojämna kolumner
         } //______________________________________ Varannan rad ska vara fetstilad
       
+
+        
 
         let distanceValue = null; //värdet av distance
         for (let distance of distances) {
