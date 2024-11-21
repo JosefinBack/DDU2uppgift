@@ -44,9 +44,7 @@ function createTable() {
 
     if ((i + 2) % 2 === 0) {
       namesRow.classList.add("even_row");
-   
-     }
-    
+     } 
 
     // Skapa celler för resterande kolumner i samma rad och skapar innehåll för cellerna 
    for (let j = 0; j < cities.length; j++) {
@@ -55,12 +53,12 @@ function createTable() {
         cell.style.display = "grid";
 
         if ((j + 2) % 2 === 0) {
-          cell.classList.add("even_col");
-          cell.classList.add("even_row"); 
+          cell.classList.add("even_col"); //ger grå bakgrundfärg på varannan kolumn
+          cell.classList.add("even_row"); // celler i jämna kolumner
          } else if 
         ((j + 1) % 2 === 0) {
-          cell.classList.add("even_row"); 
-        }
+          cell.classList.add("even_row");  //celler i ojämna kolumner
+        } //______________________________________ Varannan rad ska vara fetstilad
       
 
         let distanceValue = null; //värdet av distance
@@ -84,7 +82,6 @@ function createTable() {
     }
   }
 }
-
 
 
 //hitta närmsate staden och staden längts bort
