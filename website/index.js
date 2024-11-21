@@ -44,7 +44,7 @@ function createTable() {
 
     if ((i + 2) % 2 === 0) {
       namesRow.classList.add("even_row");
-      cell.classList.add("even_row");
+   
      }
     
 
@@ -56,7 +56,12 @@ function createTable() {
 
         if ((j + 2) % 2 === 0) {
           cell.classList.add("even_col");
-      }
+          cell.classList.add("even_row"); 
+         } else if 
+        ((j + 1) % 2 === 0) {
+          cell.classList.add("even_row"); 
+        }
+      
 
         let distanceValue = null; //värdet av distance
         for (let distance of distances) {
@@ -79,6 +84,7 @@ function createTable() {
     }
   }
 }
+
 
 
 //hitta närmsate staden och staden längts bort
