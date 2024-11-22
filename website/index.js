@@ -22,7 +22,7 @@ function createTable() {
     const emptyCell = document.createElement("div");
     emptyCell.classList.add("cell"); 
     emptyCell.classList.add("head_column"); 
-    emptyCell.style.display = "grid";
+    emptyCell.style.display = "grid"; //var tvungen att ha style grid för annars blev inte storleken rätt
     tabell.appendChild(emptyCell); 
 
     if (a=== 0) {
@@ -51,17 +51,7 @@ function createTable() {
         const cell = document.createElement("div");
         cell.classList.add("cell");
         cell.style.display = "grid";
-
-        if ((j + 2) % 2 === 0) {
-          cell.classList.add("even_col"); //ger grå bakgrundfärg på varannan kolumn
-          cell.classList.add("even_row"); // fetstil underlinje på celler i jämna kolumner
-         } else if 
-        ((j + 1) % 2 === 0) {
-          cell.classList.add("even_row");  //fetstil underlinje på celler i ojämna kolumner
-        } //______________________________________ Varannan rad ska vara fetstilad
       
-
-        
 
         let distanceValue = null; //värdet av distance
         for (let distance of distances) {
@@ -78,6 +68,17 @@ function createTable() {
             cell.textContent = distanceValue / 10;
         } else if (i === j) {
             cell.textContent = "";
+        }
+        if ((j + 2) % 2 === 0) {
+          cell.classList.add("even_col"); //ger grå bakgrundfärg på varannan kolumn
+         // cell.classList.add("even_row"); // fetstil underlinje på celler i jämna kolumner
+         } //else if 
+        //((j + 1) % 2 === 0) {
+         // cell.classList.add("even_row");  //fetstil underlinje på celler i ojämna kolumner
+        //}______________________________________ Varannan rad ska vara fetstilad
+
+        if (i % 2 === 0) {
+          cell.classList.add("even_row"); 
         }
 
         tabell.appendChild(cell);
@@ -178,7 +179,7 @@ const foundCity = cities.find(function(city) {
 if (foundCity) {
   h2.textContent = `${foundCity.name} (${foundCity.country})`;
 } else {
-  h2.textContent = cityFromUser + "not found in the database";
+  h2.textContent = cityFromUser + " not found in the database";
 }
 
 //fixar namnet i title 
