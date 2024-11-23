@@ -12,21 +12,21 @@ function namedCity() {
 function createTable() {
   const tabell = document.querySelector("#table"); 
   tabell.style.width = "100%"; 
-  const rows = 40; 
 
   //skapa tomma celler överst, och fyll dem med id-nummer (ÖVERSTA RADEN)
-  for ( let a = 0; a <= cities.length; a++) {
-    const topCell = document.createElement("div");
-    topCell.classList.add("cell"); 
-    topCell.classList.add("head_column"); 
-    tabell.appendChild(topCell); 
+  const topCell = document.createElement("div");
+  topCell.classList.add("cell"); 
+  topCell.classList.add("head_column"); 
+  topCell.textContent = "";
+  tabell.appendChild(topCell); 
 
-    if (a === 0) {
-      topCell.textContent = ""; 
-    } else {
-      topCell.textContent = cities[a-1].id; ///hoppa över första cellen och fyller i alla celler med id-numern 
+    for ( let a = 0; a < cities.length; a++) {
+      const topCell = document.createElement("div");
+      topCell.classList.add("cell"); 
+      topCell.classList.add("head_column"); 
+      topCell.textContent = cities[a].id; 
+      tabell.appendChild(topCell); 
     }
-  }
 
   // Iterera över städer och lägg till namn i griden
   for (let i = 0; i < cities.length; i++) {
@@ -47,15 +47,16 @@ function createTable() {
           cell.classList.add("cell");
           tabell.appendChild(cell);
 
-          let distanceValue = null; //värdet av distance. Null = tom 
-          for (let distance of distances) { //vi går igenom varje objekt i arrayen distances. distance är ett objekt som innehåller två städer och ett avstånd 
-              if ((distance.city1 === cities[i].id && distance.city2 === cities[j].id)) { //måste använda i för att den representerar städerna i raderna medan j representerar städer i kolumnerna. Eftersom vi har && så betyder det att båda jämförelserna måste stämma. 
-                //vi kontrollerar om staden i raden matchar city 1 och om staden i kolumnen matchar city 2. Om de matchar så går vi vidare till nästa rad. 
-                  distanceValue = distance.distance; // om ovan stämmer så betyder det at vi har hittat ett avstånd mellan två städer och det avståndet lagar. Det första distance = objektet som innehåller 2 städer och avstånd, och det andra distance är själva egenskapen i objektet (avståndet). Så med distance.distance så är vi ute efter avståndet i objektet. 
-                  break; // eftersom vi hittat värdet så avslutar vi loopen 
+          let distanceValue = null; 
+          for (let distance of distances) { 
+              if (distance.city1 === cities[i].id) { //kontrollera om city1(id) matchar id för den satden som finns på index [i] i cities. 
+                if (distance.city2 === cities[j].id); //måste ha i på ena och j på andra eftersom ajg vill matcha städer från rader med städer från kolumner 
+                  distanceValue = distance.distance; //båda måset matcha för att distanceValue ska få ett nytt värde 
+                  break;
               }
-              if (distance.city2 === cities[i].id && distance.city1 === cities[j].id) { //samma jämförelse som ovan, men i omvänd ordning
-                  distanceValue = distance.distance;
+              if (distance.city2 === cities[i].id) {
+                if (distance.city1 === cities[j].id); 
+                  distanceValue = distance.distance; 
               }
           }
 
@@ -76,7 +77,6 @@ function createTable() {
     }
   }
 }
-
 
 //hitta närmsate staden och staden längts bort
 function findClosestAndFurtherst() {

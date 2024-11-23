@@ -11,28 +11,28 @@ function namedCity() {
 
 function createTable() {
   const tabell = document.querySelector("#table"); 
-  tabell.style.width = "100%"; 
-  const rows = 40; 
+  tabell.style.width = "100%";
 
-  for ( let a = 0; a <= cities.length; a++) {
-    const topCell = document.createElement("div");
-    topCell.classList.add("cell"); 
-    topCell.classList.add("head_column"); 
-    tabell.appendChild(topCell); 
+  const topCell = document.createElement("div");
+  topCell.classList.add("cell"); 
+  topCell.classList.add("head_column"); 
+  topCell.textContent = "";
+  tabell.appendChild(topCell); 
 
-    if (a === 0) {
-      topCell.textContent = ""; 
-    } else {
-      topCell.textContent = cities[a-1].id; 
+    for ( let a = 0; a < cities.length; a++) {
+      const topCell = document.createElement("div");
+      topCell.classList.add("cell"); 
+      topCell.classList.add("head_column"); 
+      topCell.textContent = cities[a].id; 
+      tabell.appendChild(topCell); 
     }
-  }
 
-  for (let i = 0; i < cities.length; i++) {
-    let namesRow = document.createElement("div");
-    namesRow.textContent = `${cities[i].id}` + " - " + cities[i].name; 
-    namesRow.classList.add("head_row");
-    namesRow.classList.add("cell");
-    tabell.appendChild(namesRow);
+    for (let i = 0; i < cities.length; i++) {
+      let namesRow = document.createElement("div");
+      namesRow.textContent = `${cities[i].id}` + " - " + cities[i].name; 
+      namesRow.classList.add("head_row");
+      namesRow.classList.add("cell");
+      tabell.appendChild(namesRow);
 
     if (i % 2 === 0) {
       namesRow.classList.add("even_row"); 
@@ -45,12 +45,14 @@ function createTable() {
 
           let distanceValue = null; 
           for (let distance of distances) { 
-              if ((distance.city1 === cities[i].id && distance.city2 === cities[j].id)) 
+              if (distance.city1 === cities[i].id) { 
+                if (distance.city2 === cities[j].id); 
                   distanceValue = distance.distance; 
                   break;
               }
-              if (distance.city2 === cities[i].id && distance.city1 === cities[j].id) { 
-                  distanceValue = distance.distance;
+              if (distance.city2 === cities[i].id) {
+                if (distance.city1 === cities[j].id); 
+                  distanceValue = distance.distance; 
               }
           }
 
@@ -70,6 +72,7 @@ function createTable() {
      
     }
   }
+}
 
 
 function findClosestAndFurtherst() {
