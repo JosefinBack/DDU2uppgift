@@ -1,87 +1,78 @@
 // Recommended: All functions declared here
 
 function namedCity() {
-  const pElements = document.querySelectorAll("#cities p");  
-  pElements.forEach(pElement => {
+  const ListOfAllPelements = document.querySelectorAll("#cities p");  
+ ListOfAllPelements.forEach(pElement => {
     if (pElement.textContent === cityFromUser) {  
       pElement.classList.add("target"); 
     }
   }); 
 }
 
-
 function createTable() {
-  const tabell = document.querySelector("#table"); // Grid-layout
-
+  const tabell = document.querySelector("#table"); 
   tabell.style.width = "100%"; 
   const rows = 40; 
-  const columns = 40;
 
   //skapa tomma celler överst, och fyll dem med id-nummer (ÖVERSTA RADEN)
-  for ( let a = 0; a < columns; a++) {
-    const emptyCell = document.createElement("div");
-    emptyCell.classList.add("cell"); 
-    emptyCell.classList.add("head_column"); 
-    emptyCell.style.display = "grid"; //var tvungen att ha style grid för annars blev inte storleken rätt
-    tabell.appendChild(emptyCell); 
+  for ( let a = 0; a <= cities.length; a++) {
+    const topCell = document.createElement("div");
+    topCell.classList.add("cell"); 
+    topCell.classList.add("head_column"); 
+    tabell.appendChild(topCell); 
 
-    if (a=== 0) {
-      emptyCell.textContent = ""; 
+    if (a === 0) {
+      topCell.textContent = ""; 
     } else {
-      emptyCell.textContent = cities[a-1].id; ///hoppa över första cellen och fyller i alla celler 
+      topCell.textContent = cities[a-1].id; ///hoppa över första cellen och fyller i alla celler med id-numern 
     }
   }
 
   // Iterera över städer och lägg till namn i griden
-  for (let i = 0; i < cityNames.length; i++) {
+  for (let i = 0; i < cities.length; i++) {
     // Skapa och lägg till namn på städer i den första kolumnen
     let namesRow = document.createElement("div");
-    namesRow.textContent = `${cities[i].id}` + " - " + cityNames[i]; // Namnen på städerna
+    namesRow.textContent = `${cities[i].id}` + " - " + cities[i].name; // Namnen på städerna
     namesRow.classList.add("head_row");
     namesRow.classList.add("cell");
-    namesRow.style.display = "grid"; //var tvungen att ha style grid för annars blev inte storleken rätt
     tabell.appendChild(namesRow);
 
-    if ((i + 2) % 2 === 0) {
-      namesRow.classList.add("even_row"); //fetsilad underlinje under namnen
+    if (i % 2 === 0) {
+      namesRow.classList.add("even_row"); //fetsilad underlinje under namnen som finns på en jämn rad
      } 
 
     // Skapa celler för resterande kolumner i samma rad och skapar innehåll för cellerna 
-   for (let j = 0; j < cities.length; j++) {
-        const cell = document.createElement("div");
-        cell.classList.add("cell");
-        cell.style.display = "grid";
-      
+    for (let j = 0; j < cities.length; j++) {
+          const cell = document.createElement("div");
+          cell.classList.add("cell");
+          tabell.appendChild(cell);
 
-        let distanceValue = null; //värdet av distance
-        for (let distance of distances) {
-            if ((distance.city1 === cities[i].id && distance.city2 === cities[j].id)) {
-                distanceValue = distance.distance;
-                break;
-            }
-            if (distance.city2 === cities[i].id && distance.city1 === cities[j].id) {
-                distanceValue = distance.distance;
-            }
-        }
+          let distanceValue = null; //värdet av distance. Null = tom 
+          for (let distance of distances) { //vi går igenom varje objekt i arrayen distances. distance är ett objekt som innehåller två städer och ett avstånd 
+              if ((distance.city1 === cities[i].id && distance.city2 === cities[j].id)) { //måste använda i för att den representerar städerna i raderna medan j representerar städer i kolumnerna. Eftersom vi har && så betyder det att båda jämförelserna måste stämma. 
+                //vi kontrollerar om staden i raden matchar city 1 och om staden i kolumnen matchar city 2. Om de matchar så går vi vidare till nästa rad. 
+                  distanceValue = distance.distance; // om ovan stämmer så betyder det at vi har hittat ett avstånd mellan två städer och det avståndet lagar. Det första distance = objektet som innehåller 2 städer och avstånd, och det andra distance är själva egenskapen i objektet (avståndet). Så med distance.distance så är vi ute efter avståndet i objektet. 
+                  break; // eftersom vi hittat värdet så avslutar vi loopen 
+              }
+              if (distance.city2 === cities[i].id && distance.city1 === cities[j].id) { //samma jämförelse som ovan, men i omvänd ordning
+                  distanceValue = distance.distance;
+              }
+          }
 
-        if (distanceValue !== null) {
-            cell.textContent = distanceValue / 10;
-        } else if (i === j) {
-            cell.textContent = "";
-        }
-        if ((j + 2) % 2 === 0) {
-          cell.classList.add("even_col"); //ger grå bakgrundfärg på varannan kolumn
-         // cell.classList.add("even_row"); // fetstil underlinje på celler i jämna kolumner
-         } //else if 
-        //((j + 1) % 2 === 0) {
-         // cell.classList.add("even_row");  //fetstil underlinje på celler i ojämna kolumner
-        //}______________________________________ Varannan rad ska vara fetstilad
+          if (distanceValue !== null) { // !== betyder "strikt olika", så här menar vi att om vi har hittat ett värde så ska textContent fyllas i, och om vi inte hittar ett värde (alltså att distanceValue förblir null) då ska else if gälla. 
+              cell.textContent = distanceValue / 10;
+          } else if (i === j) {
+              cell.textContent = "";
+          }
+          
+      if (j % 2 === 0) {
+        cell.classList.add("even_col"); //ger grå bakgrundfärg på varannan kolumn
+      } 
 
-        if (i % 2 === 0) {
-          cell.classList.add("even_row"); 
-        }
-
-        tabell.appendChild(cell);
+      if (i % 2 === 0) {
+        cell.classList.add("even_row"); // ger fetstild underlinje till varannan rad
+      }
+     
     }
   }
 }
@@ -90,43 +81,75 @@ function createTable() {
 //hitta närmsate staden och staden längts bort
 function findClosestAndFurtherst() {
   // Hitta staden i `cities` och hämta dess ID
-  const userCityData = cities.find(city => city.name === cityFromUser); //.find() går igenom varje elemnt i arrayen och returnerar det första värdet som blir true
+  let citiesObject = null; //skapar en variabel som är tom
+    for (let i = 0; i < cities.length; i++) { // går igenom alla städer i cities
+      if (cities[i].name === cityFromUser) { // Jämför stadens namn på ett visst index med inmatningen från användaren
+        citiesObject = cities[i]; // om det ovan stämmer så ger vi variablen citiesObject värdet av objektet som innehåller stadens namn
+        break; // avsluta loopen 
+      }
+    }
 
-  if (userCityData) {
-    const userCityId = userCityData.id; 
+  if (citiesObject !== null) {  // !== betyder stirkt olika, så vi säger att om citiesObject INTE är null, så ska följande hända (blir bara null ifall om staden inte finns)
+        const citiesObjectId = citiesObject.id; //vi hämtar stadens id (den staden osm skrivs in i prompt)
   
     //  Filtrera avstånd som är relaterade till staden
-    const relatedDistances = distances.filter(
-      dist => dist.city1 === userCityId || dist.city2 === userCityId
-    );
+    let relatedDistances = distances.filter(function(dist) { //en anonym funktion som körs tillfälligt (definieras på plats) och är utan namn. "Dist" representerar varje objekt i distance och innehåller avståndsinformationen mellan två städer. 
+      return dist.city1 === citiesObjectId || dist.city2 === citiesObjectId; 
+    }); //filter används för att skapa en ny array som kommer innehålla objekt där villkoret är sant. Objekten kommer innehålla den valda stadens id på antingen city 1 eller city 2. Den går igenom distance-arrayen. 
+    // return är för att jag ska komma åt värdet utanför scopet
+    // om return får värdet true så kommer objektet att ingå i arrayen soom filter skapar. De objekt som fylls på i arrayen är de som innehåller samma id som antingen city1 eller city 2 har.  
 
     //  Hitta närmaste och längst bort baserat på avstånd
-    let nearest = relatedDistances[0];
-    let farthest = relatedDistances[0];
-
-    relatedDistances.forEach(dist => {
-      if (dist.distance < nearest.distance) nearest = dist;
-      if (dist.distance > farthest.distance) farthest = dist;
-    }); 
+    let nearest = null;
+    let farthest = null;
+      for (let i = 0; i < relatedDistances.length; i++) { //relatedDistances en array med 38 objekt och alla 38 objekt ska loopas igeno
+            let dist = relatedDistances[i]; //för varje varv i loopen hämtas det aktuella objektet från arrayen med hjälp av index [i]. Det blir 38 objekt, där [i] får värdet av cityFromUser´s index på den valda staden      
+          if (nearest === null || dist.distance < nearest.distance) { //är nearest = null eller är det aktuella objektet (dist.distance) mindre än det nuvarande avståndet. 
+            nearest = dist; 
+          }
+          if (farthest === null || dist.distance > farthest.distance) {
+            farthest = dist; 
+          }
+      }
 
     // Hämta namnen på städerna
-    const nearestCityId = nearest.city1 === userCityId ? nearest.city2 : nearest.city1;
-    const farthestCityId = farthest.city1 === userCityId ? farthest.city2 : farthest.city1;
+    let nearestCityId;
+      if (nearest.city1 === citiesObjectId) { // om city1 i objektet som representerar nearest är samma som citiesObjectID (vilket är id från valda staden), då ska följande gälla
+        nearestCityId = nearest.city2; // I objektet med avstånd så är en av city1 eller city2 den staden som jag skriv i propmt, och den staden vill vi inte använda som närmast eller längst bort, så därför måste vi välja den andra staden. 
+    } else {
+      nearestCityId = nearest.city1; 
+    }
+    
+    let farthestCityId;
+      if (farthest.city1 === citiesObjectId) {
+        farthestCityId = farthest.city2; 
+    } else {
+      farthestCityId = farthest.city1;
+    }
 
-    const nearestCity = cities.find(city => city.id === nearestCityId);
-    const farthestCity = cities.find(city => city.id === farthestCityId);
+    let nearestCity;
+      for (let i = 0; i < cities.length; i++) {
+        if (cities[i].id === nearestCityId) { //loopa igenom alla objekt i arrayen cities där vi kontrollerar om stadens id är samma som nearestCityId
+          nearestCity = cities[i]; //nearestCity blir då objektet som finns på plats [i] 
+          break; 
+        }
+      }
 
+      let farthestCity;
+      for (let i = 0; i < cities.length; i++) {
+        if (cities[i].id === farthestCityId) { 
+          farthestCity = cities[i];  
+          break; 
+        }
+      }
 
-    //console.log(`${nearestCity.name} (${nearest.distance}`)
-   // console.log(`${farthestCity.name} (${farthest.distance}`)
-
-    document.getElementById("closest").textContent = `${nearestCity.name}`; //sätter namnen i h3 med vilken stad som är närmast och längst bort 
-    document.getElementById("furthest").textContent = `${farthestCity.name}`; 
+      document.getElementById("closest").textContent = `${nearestCity.name}`; //sätter namnen i h3 med vilken stad som är närmast och längst bort 
+      document.getElementById("furthest").textContent = `${farthestCity.name}`; 
    
     //stad blir grön
     if (cityNames.includes(nearestCity.name)) {
-      const allPelements = document.querySelectorAll("#cities p");  
-      allPelements.forEach(pElement => {
+      const ListOfAllPelements = document.querySelectorAll("#cities p");  
+      ListOfAllPelements.forEach(pElement => {
       if (pElement.textContent === nearestCity.name) {  
       pElement.classList.add("closest"); 
       pElement.textContent = `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`;
@@ -136,13 +159,13 @@ function findClosestAndFurtherst() {
 
    //stad blir blå
    if (cityNames.includes(farthestCity.name)) {
-    const allPelements = document.querySelectorAll("#cities p");  
-    allPelements.forEach(pElement => {
+    const ListOfAllPelements = document.querySelectorAll("#cities p");  
+    ListOfAllPelements.forEach(pElement => {
     if (pElement.textContent === farthestCity.name) {  
     pElement.classList.add("furthest"); 
     pElement.textContent = `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`;
     }
-  }); 
+    }); 
   }
 }
 }
@@ -152,7 +175,6 @@ function findClosestAndFurtherst() {
 pElement = document.querySelector("p");
 h2 = document.querySelector("h2");
 title = document.querySelector("title"); 
-greyTable = document.getElementById("table"); 
 
 // Recommended: Ask for the city name and then the rest of the code
 
