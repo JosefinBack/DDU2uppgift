@@ -133,25 +133,25 @@ function findClosestAndFurtherst() {
         }
       }
 
-      document.getElementById("closest").textContent = `${nearestCity.name}`; //sätter namnen i h3 med vilken stad som är närmast och längst bort 
+      document.getElementById("closest").textContent = `${nearestCity.name}`; 
       document.getElementById("furthest").textContent = `${farthestCity.name}`; 
    
     if (cityNames.includes(nearestCity.name)) {
-      const alllistOfAllPelements = document.querySelectorAll("#cities p");  
-      alllistOfAllPelements.forEach(pElement => {
-      if (pElement.textContent === nearestCity.name) {  
-      pElement.classList.add("closest"); 
-      pElement.textContent = `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`;
+      const ListOfAllPelements = document.querySelectorAll("#cities p");  
+      ListOfAllPelementsistOfAllPelements.forEach(pElement => {
+        if (pElement.textContent === nearestCity.name) {  
+        pElement.classList.add("closest"); 
+        pElement.textContent = `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`;
       }
     }); 
    }
 
    if (cityNames.includes(farthestCity.name)) {
-    const alllistOfAllPelements = document.querySelectorAll("#cities p");  
-    alllistOfAllPelements.forEach(pElement => {
-    if (pElement.textContent === farthestCity.name) {  
-    pElement.classList.add("furthest"); 
-    pElement.textContent = `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`;
+    const ListOfAllPelements = document.querySelectorAll("#cities p");  
+    ListOfAllPelementsistOfAllPelements.forEach(pElement => {
+      if (pElement.textContent === farthestCity.name) {  
+      pElement.classList.add("furthest"); 
+      pElement.textContent = `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`;
     }
     }); 
   }
