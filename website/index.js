@@ -88,50 +88,50 @@ function findClosestAndFurtherst() {
           }
         }  
  
-    let nearest = null;
-    let farthest = null;
-      for (let i = 0; i < relatedDistances.length; i++) { 
-            let dist = relatedDistances[i];     
-          if (nearest === null || dist.distance < nearest.distance) { 
-            nearest = dist; 
-          }
-          if (farthest === null || dist.distance > farthest.distance) {
-            farthest = dist; 
-          }
-      }
-
-    let nearestCityId;
-      if (nearest.city1 === citiesObjectId) { 
-        nearestCityId = nearest.city2;  
-      } else {
-      nearestCityId = nearest.city1; 
-    }
-    
-    let farthestCityId;
-      if (farthest.city1 === citiesObjectId) {
-        farthestCityId = farthest.city2; 
-      } else {
-      farthestCityId = farthest.city1;
-    }
-
-    let nearestCity;
-      for (let i = 0; i < cities.length; i++) {
-        if (cities[i].id === nearestCityId) { 
-          nearestCity = cities[i];
-          break; 
+      let nearest = null;
+      let farthest = null;
+        for (let i = 0; i < relatedDistances.length; i++) { 
+              let dist = relatedDistances[i];     
+            if (nearest === null || dist.distance < nearest.distance) { 
+              nearest = dist; 
+            }
+            if (farthest === null || dist.distance > farthest.distance) {
+              farthest = dist; 
+            }
         }
+  
+      let nearestCityId;
+        if (nearest.city1 === citiesObjectId) { 
+          nearestCityId = nearest.city2;  
+        } else {
+        nearestCityId = nearest.city1; 
+      }
+      
+      let farthestCityId;
+        if (farthest.city1 === citiesObjectId) {
+          farthestCityId = farthest.city2; 
+        } else {
+        farthestCityId = farthest.city1;
       }
 
-      let farthestCity;
-      for (let i = 0; i < cities.length; i++) {
-        if (cities[i].id === farthestCityId) { 
-          farthestCity = cities[i];  
-          break; 
+      let nearestCity;
+        for (let i = 0; i < cities.length; i++) {
+          if (cities[i].id === nearestCityId) { 
+            nearestCity = cities[i];
+            break; 
+          }
         }
-      }
 
-      document.getElementById("closest").textContent = `${nearestCity.name}`; 
-      document.getElementById("furthest").textContent = `${farthestCity.name}`; 
+        let farthestCity;
+        for (let i = 0; i < cities.length; i++) {
+          if (cities[i].id === farthestCityId) { 
+            farthestCity = cities[i];  
+            break; 
+          }
+        }
+
+        document.getElementById("closest").textContent = `${nearestCity.name}`; 
+        document.getElementById("furthest").textContent = `${farthestCity.name}`; 
 
     function newColorOnCity (pElement, className, text) { 
       pElement.classList.add(className); 
@@ -167,7 +167,7 @@ title = document.querySelector("title");
 let cityFromUser = prompt("Write the name of a city");
 
 const cityNames = [];
-for (const city of cities) {
+for (let city of cities) {
   cityNames.push(city.name) 
 }
 
@@ -179,9 +179,15 @@ for( let i = 0; i < cityNames.length; i++) {
   divCities.appendChild(pElement);  
 }
 
-const foundCity = cities.find(function(city) {
-  return city.name === cityFromUser;
-});
+let foundCity = null;
+
+for (let i = 0; i < cityNames.length; i++) {
+  if (cities[i].name === cityFromUser) {
+    foundCity = cities[i];
+    break; 
+  }
+}
+
 if (foundCity) {
   h2.textContent = `${foundCity.name} (${foundCity.country})`;
 } else {

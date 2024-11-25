@@ -92,7 +92,7 @@ function findClosestAndFurtherst() {
         for (let i = 0; i < distances.length; i++) {
           let dist = distances[i]; // Hämtar det aktuella avståndsobjektet från distances-arrayen
           if (dist.city1 === citiesObjectId || dist.city2 === citiesObjectId) {
-            relatedDistances.push(dist); // Lägger till objektet i relatedDistances-arrayen om det matchar
+            relatedDistances.push(dist); // gör en array med objekt. Objekten som innehåller t.ex. samma siffra på city 1 kommer att läggas till i arrayen.  
           }
         }   
 
@@ -101,7 +101,7 @@ function findClosestAndFurtherst() {
     let farthest = null;
       for (let i = 0; i < relatedDistances.length; i++) { //relatedDistances en array med 38 objekt och alla 38 objekt ska loopas igeno
             let dist = relatedDistances[i]; //för varje varv i loopen hämtas det aktuella objektet från arrayen med hjälp av index [i]. Det blir 38 objekt, där [i] får värdet av cityFromUser´s index på den valda staden      
-          if (nearest === null || dist.distance < nearest.distance) { //är nearest = null eller är det aktuella objektet (dist.distance) mindre än det nuvarande avståndet. 
+          if (nearest === null || dist.distance < nearest.distance) { //är nearest = null eller är det aktuella objektet (dist.distance) mindre än det nuvarande avståndet. Man måste ha med === null för att vid första iterationen så har nearest värdet null, och om man skulle försöka jämföra mer nearest.distance så får man fel, eftersom det inte finns ett värde i nearerst. 
             nearest = dist; 
           }
           if (farthest === null || dist.distance > farthest.distance) {
@@ -193,15 +193,20 @@ for( let i = 0; i < cityNames.length; i++) { //lenght= hur många gånger loopen
 }
 
 //h2-innehåll görs med en .find på array
-const foundCity = cities.find(function(city) {
-  return city.name === cityFromUser;
-});
+let foundCity = null;
+
+for (let i = 0; i < cities.length; i++) {
+  if (cities[i].name === cityFromUser) {
+    foundCity = cities[i];
+    break; // Avsluta loopen när rätt stad hittats
+  }
+}
+
 if (foundCity) {
   h2.textContent = `${foundCity.name} (${foundCity.country})`;
 } else {
   h2.textContent = cityFromUser + " not found in the database";
 }
-
 //fixar namnet i title 
 if (cityNames.includes(cityFromUser)) {
   title.textContent = cityFromUser;
