@@ -1,12 +1,20 @@
 // Recommended: All functions declared here
 
-function namedCity() {
-  const listOfAllPelements = document.querySelectorAll("#cities p");  
-  listOfAllPelements.forEach(pElement => {
-    if (pElement.textContent === cityFromUser) {  
-      pElement.classList.add("target"); 
-    }
-  }); 
+function newColorOnCity (pElement, className, text) {
+  pElement.classList.add(className); 
+}
+
+for (let i = 0; i < pElement.length; i++) {
+  const pElement = pElement[i]; 
+  if (pElement.textContent === cityFromUser) {
+    newColorOnCity(pElement, "target", ""); 
+  }
+  if (pElement.textContent === nearestCity.name) {
+    newColorOnCity(pElement, "clostest", `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`); 
+  }
+  if (pElement.textContent === farthestCity.name) {
+    newColorOnCity(pElement, "furthest", `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`); 
+  }
 }
 
 function createTable() {
@@ -39,9 +47,9 @@ function createTable() {
      } 
  
     for (let j = 0; j < cities.length; j++) {
-          const cell = document.createElement("div");
-          cell.classList.add("cell");
-          tabell.appendChild(cell);
+          const Distcell = document.createElement("div");
+          Distcell.classList.add("cell");
+          tabell.appendChild(Distcell);
 
           let distanceValue = null; 
           for (let distance of distances) { 
@@ -135,26 +143,6 @@ function findClosestAndFurtherst() {
 
       document.getElementById("closest").textContent = `${nearestCity.name}`; 
       document.getElementById("furthest").textContent = `${farthestCity.name}`; 
-   
-    if (cityNames.includes(nearestCity.name)) {
-      const ListOfAllPelements = document.querySelectorAll("#cities p");  
-      ListOfAllPelementsistOfAllPelements.forEach(pElement => {
-        if (pElement.textContent === nearestCity.name) {  
-        pElement.classList.add("closest"); 
-        pElement.textContent = `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`;
-      }
-    }); 
-   }
-
-   if (cityNames.includes(farthestCity.name)) {
-    const ListOfAllPelements = document.querySelectorAll("#cities p");  
-    ListOfAllPelementsistOfAllPelements.forEach(pElement => {
-      if (pElement.textContent === farthestCity.name) {  
-      pElement.classList.add("furthest"); 
-      pElement.textContent = `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`;
-    }
-    }); 
-  }
 }
 }
 

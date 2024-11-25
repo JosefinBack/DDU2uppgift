@@ -1,14 +1,5 @@
 // Recommended: All functions declared here
 
-function namedCity() {
-  const ListOfAllPelements = document.querySelectorAll("#cities p");  
- ListOfAllPelements.forEach(pElement => {
-    if (pElement.textContent === cityFromUser) {  
-      pElement.classList.add("target"); 
-    }
-  }); 
-}
-
 function createTable() {
   const tabell = document.querySelector("#table"); 
   tabell.style.width = "100%"; 
@@ -78,6 +69,10 @@ function createTable() {
   }
 }
 
+
+//let nearestCity = null;
+//let farthestCity = null;
+
 //hitta närmsate staden och staden längts bort
 function findClosestAndFurtherst() {
   // Hitta staden i `cities` och hämta dess ID
@@ -145,30 +140,31 @@ function findClosestAndFurtherst() {
 
       document.getElementById("closest").textContent = `${nearestCity.name}`; //sätter namnen i h3 med vilken stad som är närmast och längst bort 
       document.getElementById("furthest").textContent = `${farthestCity.name}`; 
-   
-    //stad blir grön
-    if (cityNames.includes(nearestCity.name)) {
-      const ListOfAllPelements = document.querySelectorAll("#cities p");  
-      ListOfAllPelements.forEach(pElement => {
-        if (pElement.textContent === nearestCity.name) {  
-        pElement.classList.add("closest"); 
-        pElement.textContent = `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`;
-      }
-    }); 
-   }
 
-   //stad blir blå
-   if (cityNames.includes(farthestCity.name)) {
-    const ListOfAllPelements = document.querySelectorAll("#cities p");  
-    ListOfAllPelements.forEach(pElement => {
-      if (pElement.textContent === farthestCity.name) {  
-      pElement.classList.add("furthest"); 
-      pElement.textContent = `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`;
+//skapar en funktion inom funktionen för att ge färger till de olika städerna (svart, grön och blå)
+    function newColorOnCity (pElement, className, text) { //skapar en funktion med parametrar 
+      pElement.classList.add(className); 
+      if (text) {
+        pElement.textContent = text; //denna rad måste vara med för att textcontent endast kommer med ifall om det finns ett textvärde. 
+      }
     }
-    }); 
+    let cityPElements = document.querySelectorAll(".cityBox"); 
+
+    for (let i = 0; i < cityPElements.length; i++) { //en loop där vi går igenom alla element inom cityPElements 
+      let pElement = cityPElements[i]; //Vi tilldelar värdet av cityPElements till variabeln pElement
+      if (pElement.textContent === nearestCity.name) {
+        newColorOnCity(pElement, "closest", `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`); 
+      }
+      if (pElement.textContent === farthestCity.name) {
+        newColorOnCity(pElement, "furthest", `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`); 
+      }
+      if (pElement.textContent === cityFromUser) {
+        newColorOnCity(pElement, "target"); 
+      }
+    }
   }
 }
-}
+
 
 // Recommended: constants with references to existing HTML-elements
 
@@ -212,7 +208,10 @@ else {
   title.textContent = "Not found";
 } 
 
-//anropa funktioner
-namedCity ();
+
 createTable(); 
 findClosestAndFurtherst();
+
+
+
+
