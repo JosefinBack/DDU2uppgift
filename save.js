@@ -1,22 +1,5 @@
 // Recommended: All functions declared here
 
-function newColorOnCity (pElement, className, text) {
-  pElement.classList.add(className); 
-}
-
-for (let i = 0; i < pElement.length; i++) {
-  const pElement = pElement[i]; 
-  if (pElement.textContent === cityFromUser) {
-    newColorOnCity(pElement, "target", ""); 
-  }
-  if (pElement.textContent === nearestCity.name) {
-    newColorOnCity(pElement, "clostest", `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`); 
-  }
-  if (pElement.textContent === farthestCity.name) {
-    newColorOnCity(pElement, "furthest", `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`); 
-  }
-}
-
 function createTable() {
   const tabell = document.querySelector("#table"); 
   tabell.style.width = "100%";
@@ -27,11 +10,11 @@ function createTable() {
   topCell.textContent = "";
   tabell.appendChild(topCell); 
 
-    for ( let a = 0; a < cities.length; a++) {
+    for (let i = 0; i < cities.length; i++) {
       const topCell = document.createElement("div");
       topCell.classList.add("cell"); 
       topCell.classList.add("head_column"); 
-      topCell.textContent = cities[a].id; 
+      topCell.textContent = cities[i].id; 
       tabell.appendChild(topCell); 
     }
 
@@ -47,35 +30,39 @@ function createTable() {
      } 
  
     for (let j = 0; j < cities.length; j++) {
-          const Distcell = document.createElement("div");
-          Distcell.classList.add("cell");
-          tabell.appendChild(Distcell);
+      const DistanceCell = document.createElement("div");
+      DistanceCell.classList.add("cell");
+      tabell.appendChild(DistanceCell);
 
           let distanceValue = null; 
-          for (let distance of distances) { 
+            for (let distance of distances) { 
               if (distance.city1 === cities[i].id) { 
-                if (distance.city2 === cities[j].id); 
-                  distanceValue = distance.distance; 
-                  break;
+                distanceValue = distance.distance; 
+              }
+              if (distance.city2 === cities[j].id) {
+              distanceValue = distance.distance; 
+                break;
               }
               if (distance.city2 === cities[i].id) {
-                if (distance.city1 === cities[j].id); 
+                distanceValue = distance.distance; 
+                }
+                if (distance.city1 === cities[j].id) {  
                   distanceValue = distance.distance; 
               }
-          }
-
+            }
+          
           if (distanceValue !== null) { 
-              cell.textContent = distanceValue / 10;
+            DistanceCell.textContent = distanceValue / 10;
           } else if (i === j) {
-              cell.textContent = "";
+            DistanceCell.textContent = "";
           }
           
       if (j % 2 === 0) {
-        cell.classList.add("even_col"); 
+        DistanceCell.classList.add("even_col"); 
       } 
 
       if (i % 2 === 0) {
-        cell.classList.add("even_row"); 
+        DistanceCell.classList.add("even_row"); 
       }
      
     }
@@ -114,14 +101,14 @@ function findClosestAndFurtherst() {
     let nearestCityId;
       if (nearest.city1 === citiesObjectId) { 
         nearestCityId = nearest.city2;  
-    } else {
+      } else {
       nearestCityId = nearest.city1; 
     }
     
     let farthestCityId;
       if (farthest.city1 === citiesObjectId) {
         farthestCityId = farthest.city2; 
-    } else {
+      } else {
       farthestCityId = farthest.city1;
     }
 
@@ -143,8 +130,29 @@ function findClosestAndFurtherst() {
 
       document.getElementById("closest").textContent = `${nearestCity.name}`; 
       document.getElementById("furthest").textContent = `${farthestCity.name}`; 
-}
-}
+
+      function newColorOnCity (pElement, className, text) { 
+        pElement.classList.add(className); 
+        if (text) {
+          pElement.textContent = text;  
+        }
+      }
+      let cityPElements = document.querySelectorAll(".cityBox"); 
+  
+      for (let i = 0; i < cityPElements.length; i++) { 
+        let pElement = cityPElements[i]; 
+        if (pElement.textContent === nearestCity.name) {
+          newColorOnCity(pElement, "closest", `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`);
+        }
+        if (pElement.textContent === farthestCity.name) {
+          newColorOnCity(pElement, "furthest", `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`); 
+        }
+        if (pElement.textContent === cityFromUser) {
+          newColorOnCity(pElement, "target"); 
+        }
+      }
+    }
+  }
 
 // Recommended: constants with references to existing HTML-elements
 
@@ -188,3 +196,33 @@ else {
 namedCity ();
 createTable(); 
 findClosestAndFurtherst();
+
+
+
+
+let distanceValue = null; 
+          for (let distance of distances) { //for of-loopen går igenom varje objekt i en array och "distance" får då värdet av ett objekt i taget (city1, city2 och distance)
+              if (distance.city1 === cities[i].id) { //kontrollera om city1(id) matchar id för den satden som finns på index [i] i cities. 
+                if (distance.city2 === cities[j].id); //måste ha i på ena och j på andra eftersom ajg vill matcha städer från rader med städer från kolumner 
+                  distanceValue = distance.distance; //båda måset matcha för att distanceValue ska få ett nytt värde 
+                  break;
+              }
+              if (distance.city2 === cities[i].id) {
+                if (distance.city1 === cities[j].id); 
+                  distanceValue = distance.distance; 
+              }
+          }
+
+          if (distanceValue !== null) { // !== betyder "strikt olika", så här menar vi att om vi har hittat ett värde så ska textContent fyllas i, och om vi inte hittar ett värde (alltså att distanceValue förblir null) då ska else if gälla. 
+              DistanceCell.textContent = distanceValue / 10;
+          } else if (i === j) {
+              DistanceCell.textContent = "";
+          }
+          
+      if (j % 2 === 0) {
+        DistanceCell.classList.add("even_col"); //ger grå bakgrundfärg på varannan kolumn
+      } 
+
+      if (i % 2 === 0) {
+        DistanceCell.classList.add("even_row"); // ger fetstild underlinje till varannan rad
+      }

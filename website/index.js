@@ -11,11 +11,11 @@ function createTable() {
   topCell.textContent = "";
   tabell.appendChild(topCell); 
 
-    for ( let a = 0; a < cities.length; a++) {
+    for ( let i = 0; i < cities.length; i++) {
       const topCell = document.createElement("div");
       topCell.classList.add("cell"); 
       topCell.classList.add("head_column"); 
-      topCell.textContent = cities[a].id; 
+      topCell.textContent = cities[i].id; 
       tabell.appendChild(topCell); 
     }
 
@@ -34,35 +34,52 @@ function createTable() {
 
     // Skapa celler för resterande kolumner i samma rad och skapar innehåll för cellerna 
     for (let j = 0; j < cities.length; j++) {
-          const cell = document.createElement("div");
-          cell.classList.add("cell");
-          tabell.appendChild(cell);
-
+          const DistanceCell = document.createElement("div");
+          DistanceCell.classList.add("cell");
+          tabell.appendChild(DistanceCell);
+          
           let distanceValue = null; 
           for (let distance of distances) { 
               if (distance.city1 === cities[i].id) { //kontrollera om city1(id) matchar id för den satden som finns på index [i] i cities. 
-                if (distance.city2 === cities[j].id); //måste ha i på ena och j på andra eftersom ajg vill matcha städer från rader med städer från kolumner 
-                  distanceValue = distance.distance; //båda måset matcha för att distanceValue ska få ett nytt värde 
+                if (distance.city2 === cities[j].id) {//måste ha i på ena och j på andra eftersom ajg vill matcha städer från rader med städer från kolumner 
+                   distanceValue = distance.distance; //båda måset matcha för att distanceValue ska få ett nytt värde 
                   break;
+                } 
+                 
               }
               if (distance.city2 === cities[i].id) {
-                if (distance.city1 === cities[j].id); 
+                if (distance.city1 === cities[j].id) {
                   distanceValue = distance.distance; 
+                }
               }
           }
+        
+        if (distanceValue !== null) { 
+          DistanceCell.textContent = distanceValue / 10;
+        } else if (i === j) {
+          DistanceCell.textContent = "";
+        }
+        
+    if (j % 2 === 0) {
+      DistanceCell.classList.add("even_col"); 
+    } 
+
+    if (i % 2 === 0) {
+      DistanceCell.classList.add("even_row"); 
+    }
 
           if (distanceValue !== null) { // !== betyder "strikt olika", så här menar vi att om vi har hittat ett värde så ska textContent fyllas i, och om vi inte hittar ett värde (alltså att distanceValue förblir null) då ska else if gälla. 
-              cell.textContent = distanceValue / 10;
+              DistanceCell.textContent = distanceValue / 10;
           } else if (i === j) {
-              cell.textContent = "";
+              DistanceCell.textContent = "";
           }
           
       if (j % 2 === 0) {
-        cell.classList.add("even_col"); //ger grå bakgrundfärg på varannan kolumn
+        DistanceCell.classList.add("even_col"); //ger grå bakgrundfärg på varannan kolumn
       } 
 
       if (i % 2 === 0) {
-        cell.classList.add("even_row"); // ger fetstild underlinje till varannan rad
+        DistanceCell.classList.add("even_row"); // ger fetstild underlinje till varannan rad
       }
      
     }
@@ -153,7 +170,7 @@ function findClosestAndFurtherst() {
     for (let i = 0; i < cityPElements.length; i++) { //en loop där vi går igenom alla element inom cityPElements 
       let pElement = cityPElements[i]; //Vi tilldelar värdet av cityPElements till variabeln pElement
       if (pElement.textContent === nearestCity.name) {
-        newColorOnCity(pElement, "closest", `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`); 
+        newColorOnCity(pElement, "closest", `${nearestCity.name} ligger ${nearest.distance / 10} mil bort`); //anropar funktionen med argument 
       }
       if (pElement.textContent === farthestCity.name) {
         newColorOnCity(pElement, "furthest", `${farthestCity.name} ligger ${farthest.distance / 10} mil bort`); 
@@ -208,10 +225,6 @@ else {
   title.textContent = "Not found";
 } 
 
-
+//anropa funktioner
 createTable(); 
 findClosestAndFurtherst();
-
-
-
-
