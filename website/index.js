@@ -88,24 +88,24 @@ function findClosestAndFurtherst() {
           }
         }  
  
-      let nearest = null;
-      let farthest = null;
+      let nearest = relatedDistances[0];
+      let farthest = relatedDistances[0];
         for (let i = 0; i < relatedDistances.length; i++) { 
               let dist = relatedDistances[i];     
-            if (nearest === null || dist.distance < nearest.distance) { 
+            if (dist.distance < nearest.distance) { 
               nearest = dist; 
             }
-            if (farthest === null || dist.distance > farthest.distance) {
+            if (dist.distance > farthest.distance) {
               farthest = dist; 
             }
         }
-  
-      let nearestCityId;
-        if (nearest.city1 === citiesObjectId) { 
-          nearestCityId = nearest.city2;  
-        } else {
-        nearestCityId = nearest.city1; 
-      }
+    
+        let nearestCityId;
+          if (nearest.city1 === citiesObjectId) { 
+            nearestCityId = nearest.city2;  
+          } else {
+          nearestCityId = nearest.city1; 
+        }
       
       let farthestCityId;
         if (farthest.city1 === citiesObjectId) {
@@ -132,6 +132,7 @@ function findClosestAndFurtherst() {
 
         document.getElementById("closest").textContent = `${nearestCity.name}`; 
         document.getElementById("furthest").textContent = `${farthestCity.name}`; 
+
 
     function newColorOnCity (pElement, className, text) { 
       pElement.classList.add(className); 
