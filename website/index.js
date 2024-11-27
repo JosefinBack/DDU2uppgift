@@ -87,8 +87,7 @@ function findClosestAndFurtherst() {
       let farthest = relatedDistances[0];
         for (let i = 0; i < relatedDistances.length; i++) {     
             if (relatedDistances[i].distance < nearest.distance) { 
-              nearest = relatedDistances[i]; 
-              
+              nearest = relatedDistances[i];  
             }
             if (relatedDistances[i].distance > farthest.distance) {
               farthest = relatedDistances[i]; 
