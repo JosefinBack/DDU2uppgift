@@ -1,38 +1,41 @@
 // Recommended: All functions declared here
 
 function createTable() {
-  const tabell = document.querySelector("#table"); 
+  const tabell = document.getElementById("table"); 
   tabell.style.width = "100%";
 
-  const topCell = document.createElement("div");
-  topCell.classList.add("cell"); 
-  topCell.classList.add("head_column"); 
-  topCell.textContent = "";
-  tabell.appendChild(topCell); 
+  const topCellEmpty = document.createElement("div");
+  topCellEmpty.classList.add("cell", "head_column"); 
+  topCellEmpty.textContent = "";
+  tabell.appendChild(topCellEmpty); 
 
     for (let i = 0; i < cities.length; i++) {
-      const topCell = document.createElement("div");
-      topCell.classList.add("cell"); 
-      topCell.classList.add("head_column"); 
-      topCell.textContent = cities[i].id; 
-      tabell.appendChild(topCell); 
+      const topCellNumbers = document.createElement("div");
+      topCellNumbers.classList.add("cell", "head_column"); 
+      topCellNumbers.textContent = cities[i].id; 
+      tabell.appendChild(topCellNumbers); 
     }
 
     for (let i = 0; i < cities.length; i++) {
-      let namesRow = document.createElement("div");
+      const namesRow = document.createElement("div");
       namesRow.textContent = `${cities[i].id}` + " - " + cities[i].name; 
-      namesRow.classList.add("head_row");
-      namesRow.classList.add("cell");
+      namesRow.classList.add("head_row", "cell");
       tabell.appendChild(namesRow);
 
-    if (i % 2 === 0) {
-      namesRow.classList.add("even_row"); 
-     } 
+      if (i % 2 === 0) {
+        namesRow.classList.add("even_row"); 
+      } 
  
       for (let j = 0; j < cities.length; j++) {
         const DistanceCell = document.createElement("div");
         DistanceCell.classList.add("cell");
         tabell.appendChild(DistanceCell);
+          if (j % 2 === 0) {
+            DistanceCell.classList.add("even_col"); 
+          } 
+          if (i % 2 === 0) {
+            DistanceCell.classList.add("even_row"); 
+          }
 
         let distanceValue = null; 
         for (let distance of distances) { 
@@ -54,14 +57,6 @@ function createTable() {
           } else {
             DistanceCell.textContent = "";
         }
-          
-      if (j % 2 === 0) {
-        DistanceCell.classList.add("even_col"); 
-      } 
-
-      if (i % 2 === 0) {
-        DistanceCell.classList.add("even_row"); 
-      }
     }
   }
 }
@@ -90,13 +85,13 @@ function findClosestAndFurtherst() {
  
       let nearest = relatedDistances[0];
       let farthest = relatedDistances[0];
-        for (let i = 0; i < relatedDistances.length; i++) { 
-              let dist = relatedDistances[i];     
-            if (dist.distance < nearest.distance) { 
-              nearest = dist; 
+        for (let i = 0; i < relatedDistances.length; i++) {     
+            if (relatedDistances[i].distance < nearest.distance) { 
+              nearest = relatedDistances[i]; 
+              
             }
-            if (dist.distance > farthest.distance) {
-              farthest = dist; 
+            if (relatedDistances[i].distance > farthest.distance) {
+              farthest = relatedDistances[i]; 
             }
         }
     
@@ -134,10 +129,10 @@ function findClosestAndFurtherst() {
         document.getElementById("furthest").textContent = `${farthestCity.name}`; 
 
 
-    function newColorOnCity (pElement, className, text) { 
-      pElement.classList.add(className); 
+    function newColorOnCity (element, className, text) { 
+      element.classList.add(className); 
       if (text) {
-        pElement.textContent = text;  
+        element.textContent = text;  
       }
     }
       let cityPElements = document.querySelectorAll(".cityBox"); 
@@ -168,8 +163,8 @@ title = document.querySelector("title");
 let cityFromUser = prompt("Write the name of a city");
 
 const cityNames = [];
-for (let city of cities) {
-  cityNames.push(city.name) 
+  for (let city of cities) {
+    cityNames.push(city.name) 
 }
 
 for( let i = 0; i < cityNames.length; i++) { 
@@ -181,15 +176,14 @@ for( let i = 0; i < cityNames.length; i++) {
 }
 
 let foundCity = null;
-
-for (let i = 0; i < cityNames.length; i++) {
-  if (cities[i].name === cityFromUser) {
-    foundCity = cities[i];
-    break; 
-  }
+  for (let i = 0; i < cityNames.length; i++) {
+    if (cities[i].name === cityFromUser) {
+      foundCity = cities[i];
+      break; 
+    }
 }
 
-if (foundCity) {
+if (foundCity !== null) {
   h2.textContent = `${foundCity.name} (${foundCity.country})`;
 } else {
   h2.textContent = cityFromUser + " not found in the database";
